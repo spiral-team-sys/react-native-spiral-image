@@ -34,7 +34,7 @@
     "!**/.*"
   ],
   "scripts": {
-    "example": "yarn workspace react-native-spiral-image-example",
+    "example": "npm run --workspace react-native-spiral-image-example",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
     "prepare": "bob build",
     "nitrogen": "nitrogen",
@@ -101,7 +101,7 @@
   "workspaces": [
     "example"
   ],
-  "packageManager": "yarn@4.11.0",
+  "packageManager": "npm@11.6.2",
   "react-native-builder-bob": {
     "source": "src",
     "output": "lib",
