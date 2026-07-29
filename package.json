@@ -34,17 +34,20 @@
     "!**/.*"
   ],
   "scripts": {
-    "example": "yarn workspace react-native-spiral-image-example",
+    "example": "npm run --workspace react-native-spiral-image-example",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
     "prepare": "bob build",
     "nitrogen": "nitrogen",
     "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "test": "jest",
-    "release": "release-it --only-version",
-    "lint": "eslint \"**/*.{js,ts,tsx}\""
+    "release": "release-it --only-version"
   },
   "keywords": [
     "react-native",
+    "image",
+    "resize",
+    "nitro",
     "ios",
     "android"
   ],
@@ -65,13 +68,13 @@
     "@commitlint/config-conventional": "^21.0.2",
     "@eslint/compat": "^2.1.0",
     "@eslint/eslintrc": "^3.3.5",
-    "@eslint/js": "^10.0.1",
+    "@eslint/js": "^9.39.0",
     "@jest/globals": "^29.7.0",
     "@react-native/babel-preset": "0.86.0",
-    "@react-native/eslint-config": "0.85.0",
-    "@react-native/jest-preset": "0.85.0",
+    "@react-native/eslint-config": "0.86.0",
+    "@react-native/jest-preset": "0.86.0",
     "@release-it/conventional-changelog": "^11.0.1",
-    "@types/react": "^19.2.0",
+    "@types/react": "^19.1.0",
     "commitlint": "^21.0.2",
     "del-cli": "^7.0.0",
     "eslint": "^9.39.4",
@@ -98,7 +101,6 @@
   "workspaces": [
     "example"
   ],
-  "packageManager": "yarn@4.11.0",
   "react-native-builder-bob": {
     "source": "src",
     "output": "lib",
@@ -129,8 +131,7 @@
     "testEnvironmentOptions": {
       "customExportConditions": [
         "require",
-        "react-native",
-        "<%- project.sourceCondition -%>"
+        "react-native"
       ]
     },
     "modulePathIgnorePatterns": [
@@ -173,10 +174,10 @@
     "type": "nitro-module",
     "languages": "kotlin-swift",
     "tools": [
+      "eslint",
       "jest",
       "lefthook",
-      "release-it",
-      "eslint"
+      "release-it"
     ],
     "version": "0.63.0"
   }
