@@ -1,0 +1,23 @@
+{
+  "cxxNamespace": ["spiralimage"],
+  "ios": {
+    "iosModuleName": "SpiralImage"
+  },
+  "android": {
+    "androidNamespace": ["spiralimage"],
+    "androidCxxLibName": "spiralimage"
+  },
+  "autolinking": {
+    "SpiralImage": {
+      "ios": {
+        "language": "swift",
+        "implementationClassName": "SpiralImage"
+      },
+      "android": {
+        "language": "kotlin",
+        "implementationClassName": "SpiralImage"
+      }
+    }
+  },
+  "ignorePaths": ["node_modules"]
+}
