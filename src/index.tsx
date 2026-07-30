@@ -1,4 +1,5 @@
 import { NitroModules } from 'react-native-nitro-modules';
+
 import type {
   SpiralImage as SpiralImageSpec,
   ResizeOptions,
@@ -10,12 +11,12 @@ const SpiralImage =
   NitroModules.createHybridObject<SpiralImageSpec>('SpiralImage');
 
 export default SpiralImage;
+export { SpiralImage };
 
-export type {
-  SpiralImageSpec as SpiralImage,
-  ResizeOptions,
-  ImageResult,
-  ImageFormat,
-};
+export * from './components';
+export * from './hooks';
+export * from './types/ImageTypes';
 
 export { formatFileSize } from './utils/formatFileSize';
+
+export type { SpiralImageSpec, ResizeOptions, ImageResult, ImageFormat };

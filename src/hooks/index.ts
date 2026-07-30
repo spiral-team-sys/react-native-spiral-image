@@ -1,0 +1,1 @@
+export { useSpiralImage } from './useSpiralImage';
