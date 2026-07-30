@@ -1896,7 +1896,7 @@ PODS:
     - React-Core
     - React-jsi
   - ReactTestApp-Resources (1.0.0-dev)
-  - SpiralImage (0.1.0):
+  - SpiralImage (0.1.1):
     - hermes-engine
     - NitroModules
     - RCTRequired
@@ -2251,7 +2251,7 @@ SPEC CHECKSUMS:
   ReactNativeHost: c49183895850a534a9d58049bf02b3c80a3ebb0c
   ReactTestApp-DevSupport: f7ab71f25a8a8073a99cd52bf8b1fe3777ba22e5
   ReactTestApp-Resources: 1bd9ff10e4c24f2ad87101a32023721ae923bccf
-  SpiralImage: c41ecb80d8366030eff70353f4f01dc237156383
+  SpiralImage: 94b9c4918fd1dc2975a9a786e2eb68abebe493fe
   Yoga: fe50ab299e578f397fef753cf309c6703a4db29b
 
 PODFILE CHECKSUM: 0e72912ef5009672952155d2d2beab57667a39bf

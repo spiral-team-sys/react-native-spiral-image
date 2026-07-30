@@ -34,7 +34,7 @@ export default function App() {
         output,
         width: 1080,
         height: 1920,
-        quality: 90,
+        quality: 80,
         format: 'jpeg',
       });
 

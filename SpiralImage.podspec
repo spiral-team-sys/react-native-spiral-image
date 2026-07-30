@@ -19,6 +19,11 @@ Pod::Spec.new do |s|
     "cpp/**/*.{hpp,cpp}",
   ]
 
+  # Không build các model cũ vì Nitro đã generate
+  s.exclude_files = [
+    "ios/Model/**/*"
+  ]
+
   s.dependency 'React-jsi'
   s.dependency 'React-callinvoker'
 

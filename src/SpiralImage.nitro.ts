@@ -9,6 +9,7 @@ export interface ResizeOptions {
   height?: number;
   quality?: number;
   format?: ImageFormat;
+  keepAspectRatio?: boolean;
 }
 
 export interface ImageResult {
