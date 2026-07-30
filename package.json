@@ -1,6 +1,6 @@
 {
   "name": "react-native-spiral-image",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "High performance image processing library for React Native powered by Nitro",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
