@@ -1,10 +1,14 @@
 package com.margelo.nitro.spiralimage
-  
+
 import com.facebook.proguard.annotations.DoNotStrip
+import com.margelo.nitro.spiralimage.pipeline.ImagePipeline
 
 @DoNotStrip
 class SpiralImage : HybridSpiralImageSpec() {
-  override fun multiply(a: Double, b: Double): Double {
-    return a * b
-  }
+
+    override fun resize(
+        options: ResizeOptions
+    ): ImageResult {
+        return ImagePipeline.execute(options)
+    }
 }
