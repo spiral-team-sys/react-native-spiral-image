@@ -2,7 +2,12 @@ import { useCallback, useEffect, useState } from 'react';
 import type { ImageSourcePropType } from 'react-native';
 
 import { CacheManager } from '../cache';
-import type { UseSpiralImageResult } from '../types/ImageTypes';
+import type { ImageDebugInfo, UseSpiralImageResult } from '../types/ImageTypes';
+
+const DEFAULT_DEBUG: ImageDebugInfo = {
+  source: 'unknown',
+  cacheHit: false,
+};
 
 export function useSpiralImage(
   source: ImageSourcePropType
@@ -14,26 +19,35 @@ export function useSpiralImage(
 
   const [error, setError] = useState<Error | null>(null);
 
+  const [debug, setDebug] = useState<ImageDebugInfo>(DEFAULT_DEBUG);
+
   const load = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
 
-      const resolvedSource = await CacheManager.resolve(source);
+      const result = await CacheManager.resolve(source);
 
-      setCurrentSource(resolvedSource);
+      setCurrentSource(result.source);
+
+      setDebug(result.debug);
     } catch (e) {
       setError(e instanceof Error ? e : new Error(String(e)));
 
       // fallback
       setCurrentSource(source);
+
+      setDebug({
+        source: 'unknown',
+        cacheHit: false,
+      });
     } finally {
       setLoading(false);
     }
   }, [source]);
 
   useEffect(() => {
-    void load();
+    load();
   }, [load]);
 
   return {
@@ -41,5 +55,6 @@ export function useSpiralImage(
     loading,
     error,
     reload: load,
+    debug,
   };
 }

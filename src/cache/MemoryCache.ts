@@ -26,6 +26,6 @@ export class MemoryCache {
   }
 
   keys(): string[] {
-    return [...this.cache.keys()];
+    return Array.from(this.cache.keys());
   }
 }

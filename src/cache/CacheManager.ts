@@ -1,71 +1,78 @@
 import type { ImageSourcePropType } from 'react-native';
 
-import { MemoryCache } from './MemoryCache';
+import type { ResolveResult, SpiralImageOptions } from '../types/ImageTypes';
+
 import { ImagePipeline } from '../pipeline';
 
-const memory = new MemoryCache();
+export interface CacheInfo {
+  key: string;
+  originalPath: string;
+  cachePath: string;
+  exists: boolean;
+  memory: boolean;
+}
 
 export class CacheManager {
-  static get(key: string): string | undefined {
-    return memory.get(key);
-  }
-
-  static has(key: string): boolean {
-    return memory.has(key);
-  }
-
-  static set(key: string, value: string): void {
-    memory.set(key, value);
-  }
-
-  static remove(key: string): boolean {
-    return memory.remove(key);
-  }
-
-  static clear(): void {
-    memory.clear();
-  }
-
-  static getCacheSize(): number {
-    return memory.size();
-  }
-
-  static keys(): string[] {
-    return memory.keys();
-  }
-
-  static async resolve(
-    source: ImageSourcePropType
-  ): Promise<ImageSourcePropType> {
-    // Local image (require)
+  /**
+   * Generate cache key
+   */
+  static getKey(source: ImageSourcePropType): string {
     if (typeof source === 'number') {
-      return source;
+      return source.toString();
     }
 
-    // Image array (fallback sources)
     if (Array.isArray(source)) {
-      return source;
-    }
+      const first = source[0];
 
-    // Invalid source
-    if (!source || typeof source !== 'object') {
-      return source;
-    }
-
-    // URI image
-    if ('uri' in source && source.uri) {
-      const cached = this.get(source.uri);
-
-      if (cached) {
-        return {
-          ...source,
-          uri: cached,
-        };
+      if (!first) {
+        return '';
       }
 
-      return ImagePipeline.load(source);
+      return first.uri ?? JSON.stringify(first);
     }
 
-    return source;
+    if (source && typeof source === 'object' && 'uri' in source) {
+      return source.uri ?? '';
+    }
+
+    return JSON.stringify(source);
+  }
+
+  /**
+   * Main image resolver
+   */
+  static async resolve(
+    source: ImageSourcePropType,
+    options?: SpiralImageOptions
+  ): Promise<ResolveResult> {
+    return ImagePipeline.resolve(source, options);
+  }
+
+  /**
+   * Cache information
+   */
+  static async getInfo(source: ImageSourcePropType): Promise<CacheInfo> {
+    return ImagePipeline.getInfo(source);
+  }
+
+  /**
+   * Check cache
+   */
+  static async exists(source: ImageSourcePropType): Promise<boolean> {
+    return ImagePipeline.exists(source);
+  }
+
+  /**
+   * Delete cache
+   */
+  static async delete(source: ImageSourcePropType): Promise<boolean> {
+    return ImagePipeline.delete(source);
+  }
+
+  /**
+   * Clear all cache
+   */
+  static async clear(): Promise<void> {
+    return ImagePipeline.clear();
   }
 }
