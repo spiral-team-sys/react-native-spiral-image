@@ -1,19 +1,19 @@
 # react-native-spiral-image
 
-High-performance image processing library for React Native powered by Nitro Modules.
+High-performance native image processing for React Native powered by **Nitro Modules**.
 
-`react-native-spiral-image` provides fast native image processing with a simple JavaScript API. It is designed for applications that need efficient image resizing, compression, orientation correction, and local image caching on both Android and iOS.
+`react-native-spiral-image` provides a fast, lightweight image processing pipeline implemented in **Swift** and **Kotlin**. It supports image resizing, compression, EXIF orientation correction, and local caching while exposing a simple JavaScript API.
 
 ## Features
 
 * 🚀 Built with Nitro Modules
-* 📷 Native image resize
-* 🗜️ JPEG/PNG/WebP encoding
-* 📐 Keep aspect ratio support
+* 📷 Native image processing
+* 📐 Image resize
+* 🗜️ JPEG / PNG / WebP encoding
 * 🔄 Automatic EXIF orientation correction
-* 💾 Local cache and permanent storage
-* ⚡ High performance native implementation (Swift + Kotlin)
-* 📱 React Native New Architecture compatible
+* 💾 Local cache support
+* ⚡ High-performance native implementation
+* 📱 Compatible with the React Native New Architecture
 
 ---
 
@@ -25,52 +25,77 @@ Install the library together with Nitro Modules:
 npm install react-native-spiral-image react-native-nitro-modules
 ```
 
-Then install iOS dependencies:
+### iOS
 
 ```sh
 cd ios
 pod install
 ```
 
-> **Note**
->
 > `react-native-nitro-modules` is required because this library is built on top of Nitro Modules.
 
 ---
 
 ## Usage
 
-```tsx
-import { SpiralImage } from 'react-native-spiral-image';
+### Process an image
 
-const result = SpiralImage.resize({
-  input: '/path/to/input.jpg',
-  output: '',
-  width: 1080,
-  quality: 80,
-  format: 'jpeg',
-  keepAspectRatio: true,
+```tsx
+import SpiralImage from 'react-native-spiral-image';
+
+const result = await SpiralImage.process({
+  path: '/storage/emulated/0/DCIM/image.jpg',
+
+  resize: {
+    width: 1080,
+    height: 1080,
+  },
+
+  output: {
+    path: '/storage/emulated/0/Pictures/output.jpg',
+    quality: 90,
+    format: 'jpeg',
+    keepExif: true,
+  },
 });
 
 console.log(result);
 ```
 
-### Resize Options
+---
 
-| Property        | Type                        | Description                    |
-| --------------- | --------------------------- | ------------------------------ |
-| input           | string                      | Input image path               |
-| output          | string                      | Output directory or file path  |
-| width           | number                      | Target width                   |
-| height          | number                      | Target height                  |
-| quality         | number                      | JPEG/WebP quality (0-100)      |
-| format          | `'jpeg' \| 'png' \| 'webp'` | Output image format            |
-| keepAspectRatio | boolean                     | Preserve original aspect ratio |
+## Process Options
 
-### Image Result
+### ProcessOptions
+
+| Property | Type            | Description          |
+| -------- | --------------- | -------------------- |
+| path     | `string`        | Original image path  |
+| resize   | `ResizeOptions` | Resize configuration |
+| output   | `OutputOptions` | Output configuration |
+
+### ResizeOptions
+
+| Property | Type     | Description   |
+| -------- | -------- | ------------- |
+| width    | `number` | Target width  |
+| height   | `number` | Target height |
+
+### OutputOptions
+
+| Property | Type                        | Description               |
+| -------- | --------------------------- | ------------------------- |
+| path     | `string`                    | Output image path         |
+| quality  | `number`                    | JPEG/WebP quality (0-100) |
+| format   | `'jpeg' \| 'png' \| 'webp'` | Output format             |
+| keepExif | `boolean`                   | Preserve EXIF metadata    |
+
+---
+
+## Image Result
 
 ```ts
-{
+interface ImageResult {
   id: string;
   path: string;
   permanentPath: string;
@@ -82,49 +107,71 @@ console.log(result);
 
 ---
 
+## Image Component
+
+The library also provides a native `<Image />` component with automatic image processing and cache support.
+
+```tsx
+import { Image } from 'react-native-spiral-image';
+
+<Image
+  source={{
+    uri: imageUrl,
+  }}
+  style={{
+    width: 200,
+    height: 200,
+  }}
+/>;
+```
+
+---
+
 ## Roadmap
 
 ### Phase 1
 
-* ✅ Resize image
-* ✅ Compress image
-* ✅ JPEG / PNG / WebP support
+* ✅ Native image processing
+* ✅ Resize
+* ✅ JPEG / PNG / WebP encoding
 * ✅ EXIF orientation correction
-* ✅ Cache & permanent storage
 * ✅ Android
 * ✅ iOS
+* ✅ Nitro Modules integration
 
 ### Phase 2
 
-* 🚧 `<Image />` component
-* 🚧 Image preload
-* 🚧 Cache manager
+* 🚧 Smart cache manager
+* 🚧 Image preloading
 * 🚧 Metadata API
+* 🚧 Cache inspection
+* 🚧 Disk cache management
 
 ### Phase 3
 
 * Crop
 * Rotate
+* Flip
 * Watermark
-* Thumbnail generation
 * Blur
-* Progressive image loading
+* Thumbnail generation
 
 ### Phase 4
 
 * HEIC support
 * AVIF support
 * Animated WebP
-* GPU accelerated image processing
+* Progressive decoding
+* GPU acceleration
 
 ---
 
 ## Platform Support
 
-| Platform | Status |
-| -------- | ------ |
-| Android  | ✅      |
-| iOS      | ✅      |
+| Platform | Supported |
+| -------- | --------- |
+| Android  | ✅         |
+| iOS      | ✅         |
 
 ---
 
@@ -134,9 +181,9 @@ Contributions are welcome.
 
 Please read:
 
-* [Development workflow](CONTRIBUTING.md#development-workflow)
-* [Sending a pull request](CONTRIBUTING.md#sending-a-pull-request)
-* [Code of conduct](CODE_OF_CONDUCT.md)
+* Development workflow
+* Pull request guidelines
+* Code of conduct
 
 ---
 
@@ -146,4 +193,4 @@ MIT
 
 ---
 
-Built with ❤️ using **Nitro Modules** and **create-react-native-library**.
+Built with ❤️ using **Nitro Modules**.
