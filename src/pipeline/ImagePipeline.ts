@@ -1,15 +1,13 @@
 import type { ImageSourcePropType } from 'react-native';
 
-import type {
-  CacheInfo,
-  ResolveResult,
-  SpiralImageOptions,
-} from '../types/ImageTypes';
+import type { SpiralProcessOptions } from '../types';
 
 import { DiskPipeline } from './DiskPipeline';
 import { MemoryPipeline } from './MemoryPipeline';
 import { NativePipeline } from './NativePipeline';
 import { OriginalPipeline } from './OriginalPipeline';
+import type { CacheInfo, ResolveResult } from '../types';
+import { getCacheKey } from '../utils/getCacheKey';
 
 export class ImagePipeline {
   /**
@@ -26,9 +24,9 @@ export class ImagePipeline {
    */
   static async resolve(
     source: ImageSourcePropType,
-    options?: SpiralImageOptions
+    options?: SpiralProcessOptions
   ): Promise<ResolveResult> {
-    const key = this.getKey(source);
+    const key = getCacheKey(source);
 
     return (
       (await this.resolveMemory(key)) ??
@@ -90,7 +88,7 @@ export class ImagePipeline {
   private static async resolveOriginal(
     key: string,
     source: ImageSourcePropType,
-    _options?: SpiralImageOptions
+    options?: SpiralProcessOptions
   ): Promise<ResolveResult | null> {
     if (!OriginalPipeline.isLocal(source)) {
       return null;
@@ -102,9 +100,10 @@ export class ImagePipeline {
       return null;
     }
 
-    const processed = await NativePipeline.process({
-      uri: originalPath,
-    });
+    const processed = await NativePipeline.process(
+      { uri: originalPath },
+      options
+    );
 
     const processedPath =
       typeof processed === 'object' &&
@@ -149,35 +148,10 @@ export class ImagePipeline {
   }
 
   /**
-   * Generate cache key
-   */
-  static getKey(source: ImageSourcePropType): string {
-    if (typeof source === 'number') {
-      return source.toString();
-    }
-
-    if (Array.isArray(source)) {
-      const first = source[0];
-
-      if (!first) {
-        return '';
-      }
-
-      return first.uri ?? JSON.stringify(first);
-    }
-
-    if (source && typeof source === 'object' && 'uri' in source) {
-      return source.uri ?? '';
-    }
-
-    return JSON.stringify(source);
-  }
-
-  /**
    * Cache information
    */
   static async getInfo(source: ImageSourcePropType): Promise<CacheInfo> {
-    const key = this.getKey(source);
+    const key = getCacheKey(source);
 
     const memory = MemoryPipeline.get(key);
 
@@ -203,13 +177,13 @@ export class ImagePipeline {
   }
 
   static async exists(source: ImageSourcePropType): Promise<boolean> {
-    const key = this.getKey(source);
+    const key = getCacheKey(source);
 
     return MemoryPipeline.has(key) || (await DiskPipeline.has(key));
   }
 
   static async delete(source: ImageSourcePropType): Promise<boolean> {
-    const key = this.getKey(source);
+    const key = getCacheKey(source);
 
     MemoryPipeline.remove(key);
 

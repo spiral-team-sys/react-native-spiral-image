@@ -1,1 +1,1 @@
-export { useSpiralImage } from './useSpiralImage';
+export * from './useSpiralImage';

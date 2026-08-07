@@ -1,35 +1,62 @@
 package com.margelo.nitro.spiralimage.pipeline
 
+
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import java.io.File
+import android.net.Uri
+import com.margelo.nitro.spiralimage.SpiralImageContext
+
 
 object Decoder {
+
 
     fun decode(
         path: String
     ): Bitmap {
 
-        val realPath = when {
-            path.startsWith("file://") -> {
-                path.removePrefix("file://")
-            }
-
-            else -> path
+        if (path.startsWith("content://")) {
+            return decodeContentUri(path)
         }
 
-        val file = File(realPath)
 
-        if (!file.exists()) {
-            throw IllegalArgumentException(
-                "Image does not exist: $path"
+        val realPath =
+            path.replace(
+                "file://",
+                ""
             )
-        }
+
 
         return BitmapFactory.decodeFile(
-            file.absolutePath
-        ) ?: throw IllegalArgumentException(
-            "Cannot decode image: $path"
+            realPath
+        )
+            ?: throw IllegalArgumentException(
+                "Cannot decode image: $path"
+            )
+
+    }
+
+    private fun decodeContentUri(
+        uriString: String
+    ): Bitmap {
+
+        val uri =
+            Uri.parse(uriString)
+
+        val resolver =
+            SpiralImageContext.get()
+                .contentResolver
+
+        resolver.openInputStream(uri)
+            ?.use { input ->
+                return BitmapFactory.decodeStream(input)
+                    ?: throw IllegalArgumentException(
+                        "Cannot decode content URI: $uriString"
+                    )
+            }
+
+        throw IllegalArgumentException(
+            "Cannot open content URI: $uriString"
         )
     }
+
 }

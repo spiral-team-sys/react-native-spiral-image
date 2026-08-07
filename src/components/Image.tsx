@@ -5,8 +5,10 @@ import {
 } from 'react-native';
 
 import { useSpiralImage } from '../hooks/useSpiralImage';
+import type { SpiralProcessOptions } from '../types';
 
-export interface SpiralImageProps extends Omit<ImageProps, 'source'> {
+export interface SpiralImageProps
+  extends Omit<ImageProps, 'source'>, SpiralProcessOptions {
   source: ImageSourcePropType;
 }
 

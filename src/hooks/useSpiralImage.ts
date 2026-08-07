@@ -2,7 +2,11 @@ import { useCallback, useEffect, useState } from 'react';
 import type { ImageSourcePropType } from 'react-native';
 
 import { CacheManager } from '../cache';
-import type { ImageDebugInfo, UseSpiralImageResult } from '../types/ImageTypes';
+import type {
+  // SpiralProcessOptions,
+  UseSpiralImageResult,
+} from '../types/ImageTypes';
+import type { ImageDebugInfo } from '../types';
 
 const DEFAULT_DEBUG: ImageDebugInfo = {
   source: 'unknown',
@@ -11,6 +15,7 @@ const DEFAULT_DEBUG: ImageDebugInfo = {
 
 export function useSpiralImage(
   source: ImageSourcePropType
+  // options?: SpiralProcessOptions
 ): UseSpiralImageResult {
   const [currentSource, setCurrentSource] =
     useState<ImageSourcePropType>(source);

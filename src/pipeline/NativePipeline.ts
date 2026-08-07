@@ -1,6 +1,7 @@
 import type { ImageSourcePropType } from 'react-native';
-
-// import type { ResizeOptions } from '../SpiralImage.nitro';
+import SpiralImage, {
+  type SpiralProcessOptions,
+} from 'react-native-spiral-image';
 
 export class NativePipeline {
   /**
@@ -15,8 +16,8 @@ export class NativePipeline {
    * - encode
    */
   static async process(
-    source: ImageSourcePropType
-    // options?: ResizeOptions
+    source: ImageSourcePropType,
+    options?: SpiralProcessOptions
   ): Promise<ImageSourcePropType> {
     if (
       !source ||
@@ -32,20 +33,26 @@ export class NativePipeline {
     }
 
     try {
+      const normalizedSourcePath = source.uri.replace('file://', '');
+
       /**
        * TODO:
        * Enable when native resize is implemented.
        */
-      // const result = await SpiralImage.resize({
-      //   path: source.uri,
-      //   ...options,
-      // });
+      const result = await SpiralImage.process({
+        path: source.uri,
+        resize: options?.resize,
+        output: {
+          ...options?.output,
+          path: normalizedSourcePath,
+        },
+      });
 
-      // return {
-      //   uri: result.path,
-      // };
+      return {
+        uri: result.path,
+      };
 
-      return source;
+      // return source;
     } catch (e) {
       console.warn('[SpiralImage]', e);
 

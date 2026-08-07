@@ -1,16 +1,9 @@
 import type { ImageSourcePropType } from 'react-native';
 
-import type { ResolveResult, SpiralImageOptions } from '../types/ImageTypes';
+import type { SpiralProcessOptions } from '../types';
 
 import { ImagePipeline } from '../pipeline';
-
-export interface CacheInfo {
-  key: string;
-  originalPath: string;
-  cachePath: string;
-  exists: boolean;
-  memory: boolean;
-}
+import type { CacheInfo, ResolveResult } from '../types';
 
 export class CacheManager {
   /**
@@ -43,7 +36,7 @@ export class CacheManager {
    */
   static async resolve(
     source: ImageSourcePropType,
-    options?: SpiralImageOptions
+    options?: SpiralProcessOptions
   ): Promise<ResolveResult> {
     return ImagePipeline.resolve(source, options);
   }

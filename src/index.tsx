@@ -5,6 +5,7 @@ import type {
   ResizeOptions,
   ImageResult,
   ImageFormat,
+  ProcessOptions,
 } from './SpiralImage.nitro';
 
 const SpiralImage =
@@ -13,10 +14,43 @@ const SpiralImage =
 export default SpiralImage;
 export { SpiralImage };
 
+/**
+ * Components
+ */
 export * from './components';
+
+/**
+ * Hooks
+ */
 export * from './hooks';
-export * from './types/ImageTypes';
 
-export { formatFileSize } from './utils/formatFileSize';
+/**
+ * Cache
+ */
+export * from './cache';
 
-export type { SpiralImageSpec, ResizeOptions, ImageResult, ImageFormat };
+/**
+ * Pipeline
+ */
+export * from './pipeline';
+
+/**
+ * Utils
+ */
+export * from './utils';
+
+/**
+ * Types
+ */
+export * from './types';
+
+/**
+ * Nitro Types
+ */
+export type {
+  SpiralImageSpec,
+  ResizeOptions,
+  ImageResult,
+  ImageFormat,
+  ProcessOptions,
+};

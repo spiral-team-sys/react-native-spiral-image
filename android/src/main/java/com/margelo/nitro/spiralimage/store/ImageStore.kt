@@ -2,8 +2,7 @@ package com.margelo.nitro.spiralimage.store
 
 import android.content.Context
 import com.margelo.nitro.spiralimage.ImageFormat
-import com.margelo.nitro.spiralimage.ResizeOptions
-
+import com.margelo.nitro.spiralimage.ProcessOptions
 import java.io.File
 
 data class ImageStoreResult(
@@ -16,12 +15,12 @@ object ImageStore {
 
     fun prepare(
         context: Context,
-        options: ResizeOptions
+        options: ProcessOptions
     ): ImageStoreResult {
 
-        val id = ImageIdGenerator.generate()
+        val id = ImageIdGenerator.generate(options.path)
 
-        val format = options.format ?: ImageFormat.JPEG
+        val format = options.output?.format ?: ImageFormat.JPEG
 
         val extension = when (format) {
             ImageFormat.JPEG -> "jpg"
@@ -33,7 +32,7 @@ object ImageStore {
             id = id,
 
             cacheFile = CacheManager.createFile(
-                context = context,
+                cacheDir = context.cacheDir,
                 imageId = id,
                 extension = extension
             ),

@@ -1,20 +1,15 @@
 package com.margelo.nitro.spiralimage.store
-
-import android.content.Context
+ 
 import java.io.File
+
 
 object CacheManager {
 
-    private const val DIRECTORY = "spiral-image"
-
     fun directory(
-        context: Context
+        cacheDir: File
     ): File {
 
-        val dir = File(
-            context.cacheDir,
-            DIRECTORY
-        )
+        val dir = File(cacheDir, "spiral-image")
 
         if (!dir.exists()) {
             dir.mkdirs()
@@ -24,13 +19,13 @@ object CacheManager {
     }
 
     fun createFile(
-        context: Context,
+        cacheDir: File,
         imageId: String,
         extension: String
     ): File {
 
         return File(
-            directory(context),
+            directory(cacheDir),
             "$imageId.$extension"
         )
     }
