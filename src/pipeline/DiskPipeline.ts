@@ -1,4 +1,4 @@
-import RNFS from 'react-native-fs';
+import * as RNFS from '@dr.pogodin/react-native-fs';
 
 export class DiskPipeline {
   private static folder = `${RNFS.CachesDirectoryPath}/spiral-image`;
@@ -18,9 +18,22 @@ export class DiskPipeline {
    * Generate cache file path
    */
   static getPath(key: string): string {
-    const filename = encodeURIComponent(key);
+    const filename = this.getFilename(key);
 
     return `${this.folder}/${filename}`;
+  }
+
+  private static getFilename(key: string): string {
+    let hash = 2166136261;
+
+    for (let index = 0; index < key.length; index++) {
+      hash ^= key.charCodeAt(index);
+      hash = Math.imul(hash, 16777619);
+    }
+
+    const extension = key.match(/\.([a-zA-Z0-9]{1,10})(?:[?#]|$)/)?.[1];
+
+    return `${(hash >>> 0).toString(16)}${extension ? `.${extension}` : ''}`;
   }
 
   /**

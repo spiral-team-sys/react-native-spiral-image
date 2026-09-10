@@ -35,6 +35,12 @@ export class NativePipeline {
     try {
       const normalizedSourcePath = source.uri.replace('file://', '');
 
+      const fallbackOutputPath = source.uri.startsWith('content://')
+        ? `${source.uri.replace(/[^a-zA-Z0-9]/g, '_')}.spiral.jpg`
+        : `${normalizedSourcePath}.spiral.jpg`;
+
+      const outputPath = options?.output?.path ?? fallbackOutputPath;
+
       /**
        * TODO:
        * Enable when native resize is implemented.
@@ -44,7 +50,7 @@ export class NativePipeline {
         resize: options?.resize,
         output: {
           ...options?.output,
-          path: normalizedSourcePath,
+          path: outputPath,
         },
       });
 

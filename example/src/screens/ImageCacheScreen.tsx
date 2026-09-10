@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import RNFS from 'react-native-fs';
+import * as RNFS from '@dr.pogodin/react-native-fs';
 import { launchImageLibrary, type Asset } from 'react-native-image-picker';
 
 import { Button, ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -367,6 +367,8 @@ export default function ImageCacheScreen() {
       addLog(String(e));
     }
   };
+
+  console.log(displayUri);
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>

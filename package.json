@@ -1,6 +1,6 @@
 {
   "name": "react-native-spiral-image",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "High performance image processing library for React Native powered by Nitro",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
@@ -88,7 +88,7 @@
     "react": "19.2.3",
     "react-native": "0.86.0",
     "react-native-builder-bob": "^0.43.0",
-    "react-native-nitro-modules": "^0.36.3",
+    "react-native-nitro-modules": "^0.36.5",
     "release-it": "^20.2.0",
     "turbo": "^2.9.16",
     "typescript": "^6.0.3"
@@ -96,7 +96,7 @@
   "peerDependencies": {
     "react": "*",
     "react-native": "*",
-    "react-native-nitro-modules": "^0.36.3"
+    "react-native-nitro-modules": "^0.36.5"
   },
   "workspaces": [
     "example"

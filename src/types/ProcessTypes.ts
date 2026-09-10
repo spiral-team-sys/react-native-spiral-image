@@ -7,6 +7,7 @@ export interface SpiralProcessOptions {
   };
 
   output?: {
+    path?: string;
     quality?: number;
     format?: ImageFormat;
     keepExif?: boolean;

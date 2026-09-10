@@ -30,7 +30,7 @@
     ]
   },
   "android": {
-    "package": "spiralimage.example"
+    "package": "com.microsoft.reacttestapp"
   },
   "ios": {
     "bundleIdentifier": "spiralimage.example"

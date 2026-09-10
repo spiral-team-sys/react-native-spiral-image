@@ -48,8 +48,10 @@ export class ImagePipeline {
       return null;
     }
 
+    const uri = this.toFileUri(path);
+
     return {
-      source: { uri: path },
+      source: { uri },
       debug: {
         source: 'memory',
         cacheHit: true,
@@ -71,8 +73,10 @@ export class ImagePipeline {
 
     MemoryPipeline.set(key, path);
 
+    const uri = this.toFileUri(path);
+
     return {
-      source: { uri: path },
+      source: { uri },
       debug: {
         source: 'disk',
         cacheHit: true,
@@ -119,7 +123,7 @@ export class ImagePipeline {
 
     return {
       source: {
-        uri: cachePath,
+        uri: this.toFileUri(cachePath),
       },
       debug: {
         source: 'original',
@@ -194,5 +198,15 @@ export class ImagePipeline {
     MemoryPipeline.clear();
 
     await DiskPipeline.clear();
+  }
+
+  private static toFileUri(path: string): string {
+    if (!path) {
+      return path;
+    }
+
+    return path.startsWith('file://') || path.startsWith('content://')
+      ? path
+      : `file://${path}`;
   }
 }
