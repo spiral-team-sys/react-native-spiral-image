@@ -2,7 +2,7 @@ import { useState } from 'react';
 import * as RNFS from '@dr.pogodin/react-native-fs';
 import { launchImageLibrary, type Asset } from 'react-native-image-picker';
 
-import { Button, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Button, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import SpiralImage, { Image } from 'react-native-spiral-image';
 
 export default function ImageCacheScreen() {
@@ -100,7 +100,6 @@ export default function ImageCacheScreen() {
     const result = await launchImageLibrary({
       mediaType: 'photo',
       selectionLimit: 1,
-      includeExtra: true,
     });
 
     if (result.didCancel) {

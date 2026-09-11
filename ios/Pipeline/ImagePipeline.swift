@@ -1,9 +1,40 @@
 import UIKit
 
+struct ImageResizeOptions {
+
+    let input: String
+    let output: String
+
+    let width: Double?
+    let height: Double?
+
+    let quality: Double?
+    let format: ImageFormat?
+    let keepAspectRatio: Bool
+
+    init(
+        input: String,
+        output: String,
+        width: Double? = nil,
+        height: Double? = nil,
+        quality: Double? = nil,
+        format: ImageFormat? = nil,
+        keepAspectRatio: Bool = true
+    ) {
+        self.input = input
+        self.output = output
+        self.width = width
+        self.height = height
+        self.quality = quality
+        self.format = format
+        self.keepAspectRatio = keepAspectRatio
+    }
+}
+
 enum ImagePipeline {
 
     static func execute(
-        options: ResizeOptions
+        options: ImageResizeOptions
     ) throws -> ImageResult {
 
         // Decode

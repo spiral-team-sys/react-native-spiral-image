@@ -1,6 +1,6 @@
 import Foundation
 
-public struct ResizeOptions {
+public struct ImageResizeOptions {
 
     public let input: String
     public let output: String

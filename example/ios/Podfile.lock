@@ -3,7 +3,7 @@ PODS:
   - hermes-engine (250829098.0.14):
     - hermes-engine/Pre-built (= 250829098.0.14)
   - hermes-engine/Pre-built (250829098.0.14)
-  - NitroModules (0.36.3):
+  - NitroModules (0.36.5):
     - hermes-engine
     - RCTRequired
     - RCTTypeSafety
@@ -1868,6 +1868,28 @@ PODS:
     - React-utils (= 0.86.0)
     - ReactNativeDependencies
   - ReactNativeDependencies (0.86.0)
+  - ReactNativeFs (2.40.2):
+    - hermes-engine
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-Core-prebuilt
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - ReactNativeDependencies
+    - Yoga
   - ReactNativeHost (0.5.21):
     - hermes-engine
     - RCTRequired
@@ -1896,7 +1918,7 @@ PODS:
     - React-Core
     - React-jsi
   - ReactTestApp-Resources (1.0.0-dev)
-  - SpiralImage (0.1.1):
+  - SpiralImage (0.1.7):
     - hermes-engine
     - NitroModules
     - RCTRequired
@@ -2000,6 +2022,7 @@ DEPENDENCIES:
   - ReactCodegen (from `build/generated/ios/ReactCodegen`)
   - ReactCommon/turbomodule/core (from `../../node_modules/react-native/ReactCommon`)
   - ReactNativeDependencies (from `../../node_modules/react-native/third-party-podspecs/ReactNativeDependencies.podspec`)
+  - "ReactNativeFs (from `../../node_modules/@dr.pogodin/react-native-fs`)"
   - "ReactNativeHost (from `../../node_modules/@rnx-kit/react-native-host`)"
   - ReactTestApp-DevSupport (from `../../node_modules/react-native-test-app`)
   - ReactTestApp-Resources (from `..`)
@@ -2160,6 +2183,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/react-native/ReactCommon"
   ReactNativeDependencies:
     :podspec: "../../node_modules/react-native/third-party-podspecs/ReactNativeDependencies.podspec"
+  ReactNativeFs:
+    :path: "../../node_modules/@dr.pogodin/react-native-fs"
   ReactNativeHost:
     :path: "../../node_modules/@rnx-kit/react-native-host"
   ReactTestApp-DevSupport:
@@ -2174,7 +2199,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   FBLazyVector: b3e7ad108f0d882e30445c5527d774e3fd432f3d
   hermes-engine: cf0321d5db4e494c466ff76c86e218f15f1c3b03
-  NitroModules: ad8b30b0f7bc328c62fa078260b9c576e8d100ac
+  NitroModules: 452230d9b63c6c3f59dd97eeaa27ec3449271d4a
   RCTDeprecation: 2a74a2c57675e64419bd89078efde81f7c1de90b
   RCTRequired: 30451112e6fef4e6f31b4e7eee0845156e35e4b0
   RCTSwiftUI: 5aaf0b07e747ba749dc6acc94d8bd41eea4b570f
@@ -2248,10 +2273,11 @@ SPEC CHECKSUMS:
   ReactCodegen: 1973e629fe2614a7b2cf72919cb9935b6c34675f
   ReactCommon: d5c1bb4427bf51c443de5926aac332c89ddd9363
   ReactNativeDependencies: fa0a54b3f5319ae0e3b9aff32bfee7a424b88e66
+  ReactNativeFs: e43028648f9e28388242719261a2d8f33dddc6a0
   ReactNativeHost: c49183895850a534a9d58049bf02b3c80a3ebb0c
   ReactTestApp-DevSupport: f7ab71f25a8a8073a99cd52bf8b1fe3777ba22e5
   ReactTestApp-Resources: 1bd9ff10e4c24f2ad87101a32023721ae923bccf
-  SpiralImage: 94b9c4918fd1dc2975a9a786e2eb68abebe493fe
+  SpiralImage: c8c9f849e7e0f71cf126633eb2d6b474a5d328ec
   Yoga: fe50ab299e578f397fef753cf309c6703a4db29b
 
 PODFILE CHECKSUM: 0e72912ef5009672952155d2d2beab57667a39bf

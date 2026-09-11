@@ -4,7 +4,7 @@ enum Resize {
 
     static func execute(
         _ image: UIImage,
-        options: ResizeOptions
+        options: ImageResizeOptions
     ) -> UIImage {
 
         let originalWidth = image.size.width
