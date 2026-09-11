@@ -1,25 +1,24 @@
 # react-native-spiral-image
 
-High-performance native image processing for React Native powered by **Nitro Modules**.
+High-performance native image processing for React Native powered by Nitro Modules.
 
-`react-native-spiral-image` provides a fast, lightweight image processing pipeline implemented in **Swift** and **Kotlin**. It supports image resizing, compression, EXIF orientation correction, and local caching while exposing a simple JavaScript API.
+This package exposes a native `SpiralImage` hybrid object for processing local images and a React Native `Image` wrapper that resolves sources through the library cache/pipeline.
 
 ## Features
 
-* 🚀 Built with Nitro Modules
-* 📷 Native image processing
-* 📐 Image resize
-* 🗜️ JPEG / PNG / WebP encoding
-* 🔄 Automatic EXIF orientation correction
-* 💾 Local cache support
-* ⚡ High-performance native implementation
-* 📱 Compatible with the React Native New Architecture
+- 🚀 Built with Nitro Modules
+- 📷 Native image processing
+- 📐 Resize support
+- 🗜️ JPEG / PNG / WebP output
+- 🔄 EXIF preservation support
+- 💾 Cache-aware image resolution
+- ⚡ Works with the React Native New Architecture
 
 ---
 
 ## Installation
 
-Install the library together with Nitro Modules:
+Install the package together with Nitro Modules:
 
 ```sh
 npm install react-native-spiral-image react-native-nitro-modules
@@ -36,21 +35,23 @@ pod install
 
 ---
 
-## Usage
+## API
 
-### Process an image
+### Default export
 
-```tsx
+```ts
 import SpiralImage from 'react-native-spiral-image';
+```
 
+The default export is the Nitro hybrid object created from the native module:
+
+```ts
 const result = await SpiralImage.process({
   path: '/storage/emulated/0/DCIM/image.jpg',
-
   resize: {
     width: 1080,
     height: 1080,
   },
-
   output: {
     path: '/storage/emulated/0/Pictures/output.jpg',
     quality: 90,
@@ -58,41 +59,43 @@ const result = await SpiralImage.process({
     keepExif: true,
   },
 });
-
-console.log(result);
 ```
 
----
+### Process options
 
-## Process Options
+```ts
+interface ProcessOptions {
+  path: string;
+  resize?: {
+    width?: number;
+    height?: number;
+  };
+  output?: {
+    path: string;
+    quality?: number;
+    format?: 'jpeg' | 'png' | 'webp';
+    keepExif?: boolean;
+  };
+}
+```
 
-### ProcessOptions
+#### `ResizeOptions`
 
-| Property | Type            | Description          |
-| -------- | --------------- | -------------------- |
-| path     | `string`        | Original image path  |
-| resize   | `ResizeOptions` | Resize configuration |
-| output   | `OutputOptions` | Output configuration |
-
-### ResizeOptions
-
-| Property | Type     | Description   |
-| -------- | -------- | ------------- |
-| width    | `number` | Target width  |
+| Property | Type     | Description |
+| -------- | -------- | ----------- |
+| width    | `number` | Target width |
 | height   | `number` | Target height |
 
-### OutputOptions
+#### `OutputOptions`
 
-| Property | Type                        | Description               |
-| -------- | --------------------------- | ------------------------- |
-| path     | `string`                    | Output image path         |
-| quality  | `number`                    | JPEG/WebP quality (0-100) |
-| format   | `'jpeg' \| 'png' \| 'webp'` | Output format             |
-| keepExif | `boolean`                   | Preserve EXIF metadata    |
+| Property | Type | Description |
+| -------- | ---- | ----------- |
+| path | `string` | Output file path |
+| quality | `number` | JPEG/WebP quality, usually `0-100` |
+| format | `'jpeg' \| 'png' \| 'webp'` | Output format |
+| keepExif | `boolean` | Preserve EXIF metadata |
 
----
-
-## Image Result
+### Result
 
 ```ts
 interface ImageResult {
@@ -107,83 +110,82 @@ interface ImageResult {
 
 ---
 
-## Image Component
-
-The library also provides a native `<Image />` component with automatic image processing and cache support.
+## Example: process an image
 
 ```tsx
-import { Image } from 'react-native-spiral-image';
+import SpiralImage from 'react-native-spiral-image';
 
-<Image
-  source={{
-    uri: imageUrl,
-  }}
-  style={{
-    width: 200,
-    height: 200,
-  }}
-/>;
+async function processImage() {
+  const result = await SpiralImage.process({
+    path: '/storage/emulated/0/DCIM/sample.jpg',
+    resize: {
+      width: 1200,
+      height: 1200,
+    },
+    output: {
+      path: '/storage/emulated/0/Pictures/sample-processed.jpg',
+      quality: 85,
+      format: 'jpeg',
+      keepExif: true,
+    },
+  });
+
+  console.log('processed:', result);
+}
 ```
 
 ---
 
-## Roadmap
+## Image component
 
-### Phase 1
+The package also exports a React Native `Image` wrapper that resolves the source through the internal cache/pipeline.
 
-* ✅ Native image processing
-* ✅ Resize
-* ✅ JPEG / PNG / WebP encoding
-* ✅ EXIF orientation correction
-* ✅ Android
-* ✅ iOS
-* ✅ Nitro Modules integration
+```tsx
+import { Image } from 'react-native-spiral-image';
 
-### Phase 2
+export function Example() {
+  return (
+    <Image
+      source={{ uri: 'https://example.com/image.jpg' }}
+      style={{ width: 200, height: 200 }}
+    />
+  );
+}
+```
 
-* 🚧 Smart cache manager
-* 🚧 Image preloading
-* 🚧 Metadata API
-* 🚧 Cache inspection
-* 🚧 Disk cache management
-
-### Phase 3
-
-* Crop
-* Rotate
-* Flip
-* Watermark
-* Blur
-* Thumbnail generation
-
-### Phase 4
-
-* HEIC support
-* AVIF support
-* Animated WebP
-* Progressive decoding
-* GPU acceleration
+This component accepts standard React Native image props and uses the library's internal `useSpiralImage` + cache manager flow.
 
 ---
 
-## Platform Support
+## Cache and pipeline helpers
+
+The package exports cache and pipeline utilities from the top-level index, including:
+
+```ts
+import {
+  CacheManager,
+  ImagePipeline,
+  NativePipeline,
+  SpiralImage,
+} from 'react-native-spiral-image';
+```
+
+These helpers are used internally to resolve, cache, and process image sources.
+
+---
+
+## Platform support
 
 | Platform | Supported |
 | -------- | --------- |
-| Android  | ✅         |
-| iOS      | ✅         |
+| Android | ✅ |
+| iOS | ✅ |
 
 ---
 
-## Contributing
+## Notes
 
-Contributions are welcome.
-
-Please read:
-
-* Development workflow
-* Pull request guidelines
-* Code of conduct
+The library is actively evolving. Some advanced pipeline features such as crop, rotate, blur, preloading, and metadata inspection are planned but not yet fully implemented in the current source tree.
 
 ---
 
@@ -193,4 +195,4 @@ MIT
 
 ---
 
-Built with ❤️ using **Nitro Modules**.
+Built with ❤️ using Nitro Modules.
