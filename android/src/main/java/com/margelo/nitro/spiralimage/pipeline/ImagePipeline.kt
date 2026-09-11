@@ -3,6 +3,7 @@ package com.margelo.nitro.spiralimage.pipeline
 import com.margelo.nitro.spiralimage.*
 import com.margelo.nitro.spiralimage.store.CacheManager
 import com.margelo.nitro.spiralimage.store.ImageIdGenerator
+import com.margelo.nitro.spiralimage.utils.ExifUtils
 import java.io.File
 
 object ImagePipeline {
@@ -41,8 +42,10 @@ object ImagePipeline {
                     extension
                 )
 
-        val bitmap =
-            Decoder.decode(inputPath)
+        val bitmap = ExifUtils.fixOrientation(
+            Decoder.decode(inputPath),
+            inputPath
+        )
 
         val resized =
             Resize.execute(

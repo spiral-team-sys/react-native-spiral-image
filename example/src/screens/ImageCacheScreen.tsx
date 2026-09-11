@@ -82,7 +82,6 @@ export default function ImageCacheScreen() {
     if (!path) {
       return '';
     }
-
     return path.replace('file://', '');
   };
 
