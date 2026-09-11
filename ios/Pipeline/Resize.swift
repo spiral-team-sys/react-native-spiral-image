@@ -53,7 +53,7 @@ enum Resize {
                 heightRatio
             )
 
-            if options.keepAspectRatio ?? true {
+            if options.keepAspectRatio {
 
                 targetWidth = originalWidth * scale
                 targetHeight = originalHeight * scale

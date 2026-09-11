@@ -10,6 +10,7 @@ public struct ResizeOptions {
 
     public let quality: Double?
     public let format: ImageFormat?
+    public let keepAspectRatio: Bool
 
     public init(
         input: String,
@@ -17,7 +18,8 @@ public struct ResizeOptions {
         width: Double? = nil,
         height: Double? = nil,
         quality: Double? = nil,
-        format: ImageFormat? = nil
+        format: ImageFormat? = nil,
+        keepAspectRatio: Bool = true
     ) {
         self.input = input
         self.output = output
@@ -25,5 +27,6 @@ public struct ResizeOptions {
         self.height = height
         self.quality = quality
         self.format = format
+        self.keepAspectRatio = keepAspectRatio
     }
 }
